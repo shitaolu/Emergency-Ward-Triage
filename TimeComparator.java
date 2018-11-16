@@ -1,5 +1,4 @@
-package A2Q2S;
-import A2Q2.*;
+package A2Q2;
 import java.util.*;
 
 /**
