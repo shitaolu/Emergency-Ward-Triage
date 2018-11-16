@@ -1,4 +1,4 @@
-package A2Q2S;
+package A2Q2;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ import java.util.*;
  * arrival time. ID and priority must be positive integers.
  * Also represented are integer locations in priority and arrival time queues.
  *
- * @author james elder
+ * @author elder
  */
 public class Patient {
 
@@ -25,11 +25,11 @@ public class Patient {
      * @param arrivalTime
      * @throws NullPointerException if arrivalTime is null
      * @throws BoundaryViolationException if patientID or patientPriority are out of range
-   */
-    public Patient(int patientID, int patientPriority, Time arrivalTime) throws NullPointerException, BoundaryViolationException {
+      */
+    public Patient(int patientID, int patientPriority, Time time) throws NullPointerException, BoundaryViolationException {
         setID(patientID);
         setPriority(patientPriority);
-        setArrivalTime(arrivalTime);
+        setArrivalTime(time);
     }
 
     public int getID() {
@@ -67,7 +67,7 @@ public class Patient {
      * @param priority
      * @throws BoundaryViolationException if priority is out of range
      */
-    public void setPriority(int priority) throws BoundaryViolationException {
+     public void setPriority(int priority) throws BoundaryViolationException {
         if (priority < 1) {
             throw new BoundaryViolationException();
         }
@@ -97,6 +97,7 @@ public class Patient {
      */
     public void setTimePos(int pos) {
         this.timePos = pos;
+
     }
 
     public String toString() {
