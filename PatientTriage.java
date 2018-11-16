@@ -1,4 +1,4 @@
-package A2Q2S;
+package A2Q2;
 
 import java.util.*;
 
@@ -36,7 +36,7 @@ public class PatientTriage {
      * @param patient to add.
      * @throws NullPointerException if given null patient
      */
-     public void add(Patient patient) throws NullPointerException {
+    public void add(Patient patient) throws NullPointerException {
         if (patient == null) {
             throw new NullPointerException();
         }
@@ -44,7 +44,7 @@ public class PatientTriage {
         timeHeap.offer(patient); //add to arrival time queue
     }
 
-   /**
+  /**
      * Removes next patient in queue.  
      * @param currentTime used to determine whether to use priority or arrival time
      * @return Next patient to attend to
@@ -53,28 +53,24 @@ public class PatientTriage {
      * @throws BoundaryViolationException under some internal error conditions
      */
     public Patient remove(Time currentTime) throws NullPointerException, EmptyQueueException, BoundaryViolationException {
-        Patient patient;
-        Time wait;
-        Comparator<Time> comparator = new TimeComparator();
-        
-        if (currentTime == null) {
-            throw new NullPointerException();
-        }
-        if (timeHeap.isEmpty() || priorityHeap.isEmpty()) {
-            throw new EmptyQueueException();
-        }
-        
-        patient = timeHeap.peek(); //patient who has waited longest
-        wait = patient.getArrivalTime().elapsed(currentTime); //calculate wait time
-        if (comparator.compare(wait,maxWait)> 0) { //limit has been exceeded      
-            priorityHeap.remove(patient.getPriorityPos()); //remove this patient from the priority queue
-            return timeHeap.poll(); //remove and return this patient from the arrival time queue
-        }
-        else { //no one has waited past the limit - select the highest priority patient.
-            patient = priorityHeap.poll(); //remove highest prioritity patient from priority queue.
-            timeHeap.remove(patient.getTimePos()); //remove this patient from the time queue
-            return patient;
-        }
+    	if(currentTime == null){
+    		throw new NullPointerException();
+    	}
+    	if(this.priorityHeap.isEmpty() || this.timeHeap.isEmpty()){
+    		throw new EmptyQueueException();
+    	}
+    	
+    	TimeComparator timecomparator = new TimeComparator();
+    	
+    	if(timecomparator.compare(this.timeHeap.peek().getArrivalTime().elapsed(currentTime), this.maxWait) >= 0 ){ //超出最大等候时间（小时）
+    		this.priorityHeap.remove(this.timeHeap.peek().getPriorityPos());
+    		return this.timeHeap.poll();
+    	}
+    	else{
+    		this.timeHeap.remove(this.priorityHeap.peek().getTimePos());
+    		return this.priorityHeap.poll();
+    	}
+
     }
 
    /**
