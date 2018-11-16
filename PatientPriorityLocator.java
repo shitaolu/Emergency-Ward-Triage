@@ -1,4 +1,4 @@
-package A2Q2S;
+package A2Q2;
 
 /**
  * Locator for Patient record in priority queue
